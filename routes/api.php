@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 // Route::post('/receive-data', [ApiController::class, 'receivedata']);
 Route::post('/senddata', [ApiController::class, 'senddata']);
 Route::get('/showdata', [ApiController::class, 'readJsonFile']);
+Route::get('/globalstatus', [ApiController::class, 'globalstatus']);
 /*
 |--------------------------------------------------------------------------
 | API Routes

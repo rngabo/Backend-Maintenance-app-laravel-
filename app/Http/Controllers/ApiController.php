@@ -50,23 +50,16 @@ class ApiController extends Controller
         $jsonData = file_get_contents($filepath);
         $data = json_decode($jsonData, true);
     
-        $result = array();
-    
-        foreach ($data as $node) {
-            if (isset($node["bri"]) && $node["bri"] === 100) {
-                $result[] = $node["bri"]
-                ;
-            }
-        }
-    
-       dd($result);
+        return $data;
     }
     
-    
+     
 
     
     public function detectTime()
     {
+        $filteredNodes = $this->readJsonFile();
+
         $currentTime = Carbon::now()->timezone('GMT+2');
         $dayStartTime = Carbon::createFromTime(6, 0, 0, 'GMT+2');
         $dayEndTime = Carbon::createFromTime(17, 44, 0, 'GMT+2');
@@ -92,15 +85,28 @@ class ApiController extends Controller
             return 'OFF';
         }
     }
-    public function globalstatus($filteredNodes)
+    public function globalstatus()
     {
-        $globallist = array();
+        $filteredNodes = $this->readJsonFile();
+        $brightNodes = [];
+    
         foreach ($filteredNodes as $node) {
-            if ($node['bri']) {
-                $globallist[] = $node['bri'];
+            if (isset($node["bri"])) {
+                if ($node["bri"] === 100) {
+                    $brightNodes[] = $node;
+                } elseif ($node["bri"] === 0) {
+                    $offNodes[] = $node;
+                }
             }
         }
-        return response()->json($globallist);
+    
+        $response = [
+            'bright_nodes_count' => count($brightNodes),
+            'off_nodes_count' => isset($offNodes) ? count($offNodes) : 0
+            // 'bright_nodes' => $brightNodes,
+            // 'off_nodes' => isset($offNodes) ? $offNodes : [],
+        ];
+        return response()->json($response);
     }
     
     public function offline($filteredNodes)
