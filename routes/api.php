@@ -9,6 +9,7 @@ Route::post('/senddata', [ApiController::class, 'senddata']);
 Route::get('/showdata', [ApiController::class, 'readJsonFile']);
 Route::get('/globalstatus', [ApiController::class, 'globalstatus']);
 Route::get('/totalluminaire', [ApiController::class, 'totalluminaire']);
+Route::get('/offline', [ApiController::class, 'offline']);
 
 /*
 |--------------------------------------------------------------------------

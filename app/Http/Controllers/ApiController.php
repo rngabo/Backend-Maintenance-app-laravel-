@@ -114,21 +114,24 @@ class ApiController extends Controller
         foreach ($filteredNodes as $node) {
                     $allnodes[] = $node;
                 }
-                
+
         return response()->json(count($allnodes));
 
     }
-    public function offline($filteredNodes)
+    public function offline()
     {
-        // foreach($filteredNodes as $node)
-        // {
-        //     if ($node['online'] === 0)
-        //     {
-        //         $offlinelist [] = $node;
-        //     }
-        // }
-        // return $offlinelist;
+        $offline = [];
+        $filteredNodes = $this->readJsonFile();
+        foreach ($filteredNodes as $node) {
+            if (isset($node["online"])) {
+                if ($node["online"] === 0) {
+                    $offline[] = $node;
+                }
+            }
+        }
+        return response()->json(count($offline));
     }
+    
     public function fuselink_driver($filteredNodes)
     {
         //return current time
