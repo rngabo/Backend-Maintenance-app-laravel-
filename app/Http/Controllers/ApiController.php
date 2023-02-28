@@ -108,7 +108,16 @@ class ApiController extends Controller
         ];
         return response()->json($response);
     }
-    
+    public function totalluminaire()
+    {
+        $filteredNodes = $this->readJsonFile();
+        foreach ($filteredNodes as $node) {
+                    $allnodes[] = $node;
+                }
+                
+        return response()->json(count($allnodes));
+
+    }
     public function offline($filteredNodes)
     {
         // foreach($filteredNodes as $node)
