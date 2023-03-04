@@ -108,6 +108,37 @@ class ApiController extends Controller
         ];
         return response()->json($response);
     }
+
+    public function fuselinkordriver()
+    {
+        $filteredNodes = $this->readJsonFile();
+        $fuselink = [];
+    
+        // const fuselinkNodes = nodes.filter((node: any) => node.voltage==="0" && node.sEnergy==="0" && node.current === "0" && node.current==="0" && ​node.active_power==="0");
+        // const groupedfuselinkNodes = fuselinkNodes.reduce((acc: any, node: any) => {  
+        //   if (!acc[node.prjName]) {
+        //     acc[node.prjName] = {
+        //       prjName: node.prjName,
+        //       count: 0
+        //     };
+        //   }
+        foreach ($filteredNodes as $node) {
+            if (isset($node["current"])) {
+                if ($node["runtime"] == 0 && $node["voltage"] == 0 && $node["current"] == 0 && $node["active_power"] == 0 && $node["sEnergy"] == 0) {
+                    $fuselink[] = $node;
+                 }
+            }
+        }
+    
+        // $response = [
+        //     'bright_nodes_count' => count($brightNodes),
+        //     'off_nodes_count' => isset($offNodes) ? count($offNodes) : 0
+        //     // 'bright_nodes' => $brightNodes,
+        //     // 'off_nodes' => isset($offNodes) ? $offNodes : [],
+        // ];
+        return response()->json(count($fuselink));
+    }
+
     public function totalluminaire()
     {
         $filteredNodes = $this->readJsonFile();

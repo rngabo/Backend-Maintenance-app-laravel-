@@ -10,6 +10,8 @@ Route::get('/showdata', [ApiController::class, 'readJsonFile']);
 Route::get('/globalstatus', [ApiController::class, 'globalstatus']);
 Route::get('/totalluminaire', [ApiController::class, 'totalluminaire']);
 Route::get('/offline', [ApiController::class, 'offline']);
+Route::get('/fuselinkordriver', [ApiController::class, 'fuselinkordriver']);
+
 
 /*
 |--------------------------------------------------------------------------
